@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "node test.js"
   },
   "dependencies": {
     "ramda": "^0.25.0"
