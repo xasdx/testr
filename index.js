@@ -1,12 +1,20 @@
 let R = require("ramda")
 
+let reportToConsole = result => console.log(`[${result.testName}] ${R.isNil(result.failedAssertions) ? "ok" : "not good"}`)
+
+let defaultReporter = R.forEach(reportToConsole)
+
 let processTestCase = ([testName, test]) => {
   test()
   return { testName, failedAssertions: null }
 }
 
-let reportCase = testCase => console.log(`[${testCase.testName}] ${R.isNil(testCase.failedAssertions) ? "ok" : "not good"}`)
+let configureRunner = ({ reporter }) => {
+  let testReporter = reporter || defaultReporter
+  return R.pipe(R.toPairs, R.map(processTestCase), testReporter)
+}
 
 module.exports = {
-  testr: R.pipe(R.toPairs, R.map(processTestCase), R.forEach(reportCase))
+  testr: configureRunner({ reporter: defaultReporter }),
+  configure: configureRunner
 }

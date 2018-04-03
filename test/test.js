@@ -1,6 +1,6 @@
 let { expect } = require("chai")
-let { testr } = require("..")
-let { InvocationCouter } = require("./util")
+let { testr, configure } = require("..")
+let { InvocationCouter, CustomTestReporter } = require("./util")
 
 module.exports = {
   "testr": {
@@ -12,6 +12,20 @@ module.exports = {
         otherTestCase: counter.onFunction()
       })
       expect(counter.invocations).to.equal(2)
+    },
+    
+    "registersCustomReporters": () => {
+      let reporter = new CustomTestReporter()
+      let testr = configure({ reporter: reporter.reporterFunction() })
+      testr({
+        testCase: () => {},
+        otherTestCase: () => {}
+      })
+      expect(reporter.report).to.have.lengthOf(2)
+      expect(reporter.report[0].testName).to.equal("testCase")
+      expect(reporter.report[1].testName).to.equal("otherTestCase")
+      expect(reporter.report[0]).to.have.a.property("failedAssertions")
+      expect(reporter.report[1]).to.have.a.property("failedAssertions")
     }
   }
 }

@@ -9,4 +9,13 @@ class InvocationCouter {
   }
 }
 
-module.exports = { InvocationCouter }
+class CustomTestReporter {
+  reporterFunction() {
+    return results => this.report = results
+  }
+}
+
+module.exports = {
+  InvocationCouter,
+  CustomTestReporter
+}
