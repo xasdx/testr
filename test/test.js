@@ -3,6 +3,7 @@ let { testr, configure } = require("..")
 let { InvocationCouter, CustomTestReporter } = require("./util")
 
 module.exports = {
+  
   "testr": {
 
     "executesTestCases": () => {
