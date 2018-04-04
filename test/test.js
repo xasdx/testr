@@ -25,8 +25,25 @@ module.exports = {
       expect(reporter.report).to.have.lengthOf(2)
       expect(reporter.report[0].testName).to.equal("testCase")
       expect(reporter.report[1].testName).to.equal("otherTestCase")
-      expect(reporter.report[0]).to.have.a.property("failedAssertions")
-      expect(reporter.report[1]).to.have.a.property("failedAssertions")
+      expect(reporter.report[0]).to.have.a.property("results")
+      expect(reporter.report[1]).to.have.a.property("results")
+    },
+    
+     "processesAssertions": () => {
+      let reporter = new CustomTestReporter()
+      let testr = configure({ reporter: reporter.reporterFunction() })
+      testr({
+        testCase: _ => {
+          _.assert("actual", _.to.equal("expected"))
+          _.assert("value", _.to.equal("value"))
+          _.assert("otherActual", _.to.equal("otherExpected"))
+        }
+      })
+      expect(reporter.report[0].results).to.have.lengthOf(2)
+      expect(reporter.report[0].results[0]).to.contain("actual")
+      expect(reporter.report[0].results[0]).to.contain("expected")
+      expect(reporter.report[0].results[1]).to.contain("otherActual")
+      expect(reporter.report[0].results[1]).to.contain("otherExpected")
     }
   }
 }
