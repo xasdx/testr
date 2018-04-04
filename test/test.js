@@ -29,7 +29,7 @@ module.exports = {
       expect(reporter.report[1]).to.have.a.property("results")
     },
     
-     "processesAssertions": () => {
+    "processesAssertions": () => {
       let reporter = new CustomTestReporter()
       let testr = configure({ reporter: reporter.reporterFunction() })
       testr({
