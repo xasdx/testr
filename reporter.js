@@ -1,6 +1,6 @@
 let R = require("ramda")
 
-let reportToConsole = result => console.log(`[${result.testName}] ${R.isNil(result.failedAssertions) ? "ok" : "not good"}`)
+let reportToConsole = result => console.log(`[${result.testName}] ${R.empty(result.failedAssertions) ? "ok" : "not good"}`)
 
 let defaultReporter = R.forEach(reportToConsole)
 

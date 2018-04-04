@@ -8,16 +8,24 @@ let assert = (value, matcher) => assertions.push({ matcher, value })
 
 let processTestCase = ([testName, test]) => {
   test({ assert, to })
-  let results = assertions.map(assertion => assertion.matcher(assertion.value))
-                          .filter(assertionResult => !assertionResult.match)
-                          .map(assertionResult => assertionResult.fail)
-  return { testName, results }
+  
+  let collectFailedAssertions = R.pipe(
+    R.map(assertion => assertion.matcher(assertion.value)),
+    R.filter(assertionResult => !assertionResult.match),
+    R.map(assertionResult => assertionResult.fail)
+  )
+  
+  return {
+    testName,
+    failedAssertions: collectFailedAssertions(assertions)
+  }
 }
 
-let configureRunner = ({ reporter }) => {
-  let testReporter = reporter || defaultReporter
-  return R.pipe(R.toPairs, R.map(processTestCase), testReporter)
-}
+let configureRunner = ({ reporter }) => R.pipe(
+  R.toPairs,
+  R.map(processTestCase),
+  reporter || defaultReporter
+)
 
 module.exports = {
   testr: configureRunner({ reporter: defaultReporter }),
