@@ -1,17 +1,26 @@
 let R = require("ramda")
 let { defaultReporter } = require("./reporter")
-let { to } = require("./matchers")
+let { combineMatchers } = require("./matchers")
 
 let assertions = []
 
-let assert = (value, matcher) => assertions.push({ matcher, value })
+let expect = value => new Proxy({}, {
+  get: (target, name) => {
+    return expected => assertions.push({ matcher: combineMatchers(name)(expected), value })
+  }
+})
 
 let processTestCase = ([testName, test]) => {
-  test({ assert, to })
+  
+  test({ expect })
   
   let collectFailedAssertions = R.pipe(
     R.map(assertion => assertion.matcher(assertion.value)),
-    R.filter(assertionResult => !assertionResult.match),
+    R.filter(assertionResult => {
+      let matchResult = assertionResult.match
+      console.log(matchResult)
+      return !assertionResult.operators.reduce((prev, op) => op(prev), matchResult)
+    }),
     R.map(assertionResult => assertionResult.fail)
   )
   

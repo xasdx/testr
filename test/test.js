@@ -34,9 +34,9 @@ module.exports = {
       let testr = configure({ reporter: reporter.reporterFunction() })
       testr({
         testCase: _ => {
-          _.assert("actual", _.to.equal("expected"))
-          _.assert("value", _.to.equal("value"))
-          _.assert("otherActual", _.to.equal("otherExpected"))
+          _.expect("actual").toEqual("expected")
+          _.expect("value").toEqual("value")
+          _.expect("otherActual").toEqual("otherExpected")
         }
       })
       expect(reporter.report[0].failedAssertions).to.have.lengthOf(2)

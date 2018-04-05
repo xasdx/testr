@@ -1,23 +1,41 @@
 let R = require("ramda")
 
-let matcher = (expected, actual, matcher, failureDescription) => {
+let ignoredTokens = ["to"]
+
+let matcher = (expected, actual, matcher, failureDescription, operators) => {
   return {
     match: matcher(expected, actual),
     fail: failureDescription(expected, actual),
     actual,
-    expected
+    expected,
+    operators: operators || []
   }
 }
 
-let equalToMatcher = R.curry((expectedValue, value) => matcher(
-  expectedValue,
-  value,
-  (expected, actual) => expectedValue === value,
-  (expected, actual) => `Expected "${actual}" to equal "${expected}".`
-))
+let matchers = {
+  equal: (expected, actual) => expected === actual
+}
+
+let operators = {
+  not: value => !value
+}
+
+let tokenizeCamelCase = str => str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase().split("-")
 
 module.exports = {
-  to: {
-    equal: equalToMatcher
+  combineMatchers: matcherDescription => {
+    let matcherTokens = tokenizeCamelCase(matcherDescription).reverse()
+    let [matcherToken, ...operatorTokens] = matcherTokens
+    
+    let operatorPipe = operatorTokens.filter(op => !ignoredTokens.includes(op))
+                                    .map(op => operators[op])
+    
+    return R.curry((expectedValue, value) => matcher(
+      expectedValue,
+      value,
+      matchers[matcherToken],
+      (expected, actual) => `Expected "${actual} ${matcherTokens.join(" ")} ${expected}".`,
+      operatorPipe
+    ))
   }
 }
