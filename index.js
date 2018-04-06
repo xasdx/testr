@@ -1,12 +1,12 @@
 let R = require("ramda")
 let { defaultReporter } = require("./reporter")
-let { combineMatchers } = require("./matchers")
+let { parseMatcher } = require("./matcher-parser")
 
 let assertions = []
 
 let expect = value => new Proxy({}, {
   get: (target, name) => {
-    return expected => assertions.push({ matcher: combineMatchers(name)(expected), value })
+    return expected => assertions.push({ matcher: parseMatcher(name)(expected), value })
   }
 })
 
@@ -18,8 +18,7 @@ let processTestCase = ([testName, test]) => {
     R.map(assertion => assertion.matcher(assertion.value)),
     R.filter(assertionResult => {
       let matchResult = assertionResult.match
-      console.log(matchResult)
-      return !assertionResult.operators.reduce((prev, op) => op(prev), matchResult)
+      return !assertionResult.modifiers.reduce((prev, mod) => mod(prev), matchResult)
     }),
     R.map(assertionResult => assertionResult.fail)
   )
