@@ -1,7 +1,5 @@
-let R = require("ramda")
+let reportToConsole = result => console.log(`[${result.testName}] ${result.failedAssertions.length === 0 ? "ok" : "not good"}`)
 
-let reportToConsole = result => console.log(`[${result.testName}] ${R.empty(result.failedAssertions) ? "ok" : "not good"}`)
-
-let defaultReporter = R.forEach(reportToConsole)
+let defaultReporter = results => results.forEach(result => reportToConsole(result))
 
 module.exports = { defaultReporter }

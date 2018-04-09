@@ -1,5 +1,3 @@
-let R = require("ramda")
-
 let matcherFactory = require("./matcher-factory")
 let matchers = require("./matchers")
 let modifiers = require("./modifiers")
@@ -14,13 +12,13 @@ let assembleModifierPipe = operatorTokens => operatorTokens.filter(op => !ignore
 let parseMatcher = matcherDescription => {
   let matcherTokens = tokenizeCamelCase(matcherDescription).reverse()
   let [matcherToken, ...operatorTokens] = matcherTokens
-  return R.curry((expectedValue, actualValue) => matcherFactory(
+  return expectedValue => actualValue => matcherFactory(
     expectedValue,
     actualValue,
     matchers[matcherToken],
     `Expected "${actualValue} ${matcherTokens.join(" ")} ${expectedValue}".`,
     assembleModifierPipe(operatorTokens)
-  ))
+  )
 }
 
 module.exports = { parseMatcher }
