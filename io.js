@@ -1,12 +1,20 @@
-let io = () => {
+let TYPE = "io"
+
+let io = function () {
+  let args = [...arguments]
+  let outputValue = args.splice(-1)[0]
+
   return f => {
-    /* do assertions */
+    let result = f(...args)
     return {
-      success: true,
-      type: "io",
+      success: result === outputValue,
+      type: TYPE,
       meta: {
-        input: true,
-        output: true
+        input: args,
+        output: {
+          expected: outputValue,
+          actual: result
+        }
       }
     }
   }
