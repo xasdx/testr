@@ -1,3 +1,5 @@
+let { inspect } = require("util")
+
 let forEachProperty = (obj, f) => {
   for (let prop in obj) {
     if (obj.hasOwnProperty(prop)) {
@@ -6,4 +8,6 @@ let forEachProperty = (obj, f) => {
   }
 }
 
-module.exports = { forEachProperty }
+let log = obj => console.log(inspect(obj, false, null))
+
+module.exports = { forEachProperty, log }

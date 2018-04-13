@@ -1,4 +1,5 @@
 let { expect } = require("chai")
+let { log } = require("../util")
 let { unit, io } = require("..")
 
 let m = {
@@ -7,14 +8,14 @@ let m = {
 }
 
 module.exports = {
-  
+
   "testr": {
 
     "verifiesInterface": () => {
-      expect(() => unit(m).specs({ addTwo: true })).to.throw(/non-existing/i)
+      expect(() => unit(m).specs({ addTwo: [] })).to.throw(/non-existing/i)
     },
 
-    "executesAssertions": () => {
+    "collectsAssertions": () => {
       let results = unit(m).specs({
         addOne: [io(1, 2), io(9, 10)],
         subtractTwo: [io(6, 4)]
@@ -24,6 +25,18 @@ module.exports = {
       expect(results[0].results).to.have.lengthOf(2)
       expect(results[1].property).to.be.equal("subtractTwo")
       expect(results[1].results).to.have.lengthOf(1)
+    },
+
+    "evaluatesAssertions": () => {
+      let results = unit(m).specs({
+        addOne: [io(1, 2), io(9, 15)],
+        subtractTwo: []
+      })
+      expect(results).to.have.lengthOf(2)
+      expect(results[0].results).to.have.lengthOf(2)
+      expect(results[0].results[0].success).to.be.true
+      expect(results[0].results[1].success).to.be.false
+      expect(results[1].results).to.be.empty
     }
   }
 }
