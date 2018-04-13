@@ -9,8 +9,8 @@ let forEachProperty = (obj, f) => {
 let unit = targetUnit => {
   return {
     specs: specifications => {
-      forEachProperty(targetUnit, (property, cases) => {
-        if (!targetUnit[property]) { throw Error() }
+      forEachProperty(specifications, (property, cases) => {
+        if (!targetUnit[property]) { throw new Error(`Non-existing property ${property}`) }
       })
     }
   }

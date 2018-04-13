@@ -8,9 +8,8 @@ let m = {
 module.exports = {
   
   "testr": {
-
     "verifiesInterface": () => {
-      unit(m).specs({ addOne: true })
+      expect(() => unit(m).specs({ addTwo: true })).to.throw(/non-existing/i)
     }
   }
 }
