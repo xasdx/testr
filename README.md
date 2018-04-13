@@ -1,5 +1,7 @@
 # testr
 
+[![Build Status](https://travis-ci.org/xasdx/testr.svg?branch=master)](https://travis-ci.org/xasdx/testr)
+
 > A test framework with zero dependencies
 
 ```javascript
