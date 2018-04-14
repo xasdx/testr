@@ -10,6 +10,8 @@ let forEachProperty = (obj, f) => {
 
 let log = obj => console.log(inspect(obj, false, null))
 
-let isFunction = f => typeof f === "function"
+let isFunction = obj => typeof obj === "function"
 
-module.exports = { forEachProperty, log, isFunction }
+let isArray = obj => Array.isArray(obj)
+
+module.exports = { forEachProperty, log, is: { function: isFunction, array: isArray } }
