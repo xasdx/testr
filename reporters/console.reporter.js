@@ -1,19 +1,22 @@
 let TYPE_IO = "io"
 
+let isMatcher = obj => obj.matcherType !== undefined
+
 let reporter = testResults => {
   testResults.forEach(testResult => {
     console.log(`-- ${testResult.property}`)
     testResult.results.forEach(result => {
-      switch (result.type) {
+      switch (result.moduleType) {
         case TYPE_IO:
           if (result.success) {
-            console.log(` + ${result.type} # input ${result.meta.input} outputs ${result.meta.output.actual}`)
+            console.log(` + ${result.moduleType} # input ${result.meta.input} outputs ${result.meta.output.actual}`)
           } else {
-            console.log(` - ${result.type} # input ${result.meta.input} should output ${result.meta.output.expected} (got ${result.meta.output.actual})`)
+            let expected = isMatcher(result.meta.output.expected) ? result.meta.output.expected.toString() : result.meta.output.expected
+            console.log(` - ${result.moduleType} # input ${result.meta.input} should output ${expected} (got ${result.meta.output.actual})`)
           }
           break
         default:
-          throw new Error(`[reporter] result type ${result.type} is not supported`)
+          throw new Error(`[reporter] result type ${result.moduleType} is not supported`)
       }
     })
   })
