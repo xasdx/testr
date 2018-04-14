@@ -8,6 +8,7 @@ let io = function () {
     type: TYPE,
     execute: f => {
       let result = f(...args)
+      
       return {
         success: result === outputValue,
         type: TYPE,
