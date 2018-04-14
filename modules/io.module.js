@@ -1,25 +1,46 @@
-let TYPE = "io"
+let { log } = require("../util")
+
+let MODULE_TYPE = "io"
+
+let MATCHER_TYPE = {
+  TYPE: "type"
+}
+
+let evaluateMatcher = (matcher, value) => {
+  switch (matcher.matcherType) {
+    case MATCHER_TYPE.TYPE:
+      return matcher.matches(value)
+    default: // it is a primitive
+      return matcher === value
+  }
+}
+
+let parseArguments = arguments => {
+  let args = [...arguments]
+  let matcher = args.splice(-1)[0]
+  return { args, matcher }
+}
 
 let io = function () {
-  let args = [...arguments]
-  let outputValue = args.splice(-1)[0]
+  let { args, matcher } = parseArguments(arguments)
 
   return {
-    type: TYPE,
+    moduleType: MODULE_TYPE,
     execute: f => {
       let result = f(...args)
-      
-      return {
-        success: result === outputValue,
-        type: TYPE,
+      let ioResult = {
+        success: evaluateMatcher(matcher, result),
+        moduleType: MODULE_TYPE,
         meta: {
           input: args,
           output: {
-            expected: outputValue,
+            expected: matcher,
             actual: result
           }
         }
       }
+      if (process.env.TESTR_IO_DEBUG) { log(ioResult) }
+      return ioResult
     }
   }
 }
