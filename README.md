@@ -35,3 +35,11 @@ unit({ addOne, multiply, findUsers }).specs({
   ]
 })
 ```
+
+It has a built-in reporter, which logs to the console, displaying some information and indicating the success of the test cases:
+
+```
+-- addOne
+ + io # input [1] outputs 2
+ - io # input [1] should output a boolean value, but got 2
+```
