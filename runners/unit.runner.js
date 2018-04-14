@@ -1,13 +1,16 @@
-let { forEachProperty } = require("./util")
+let { forEachProperty, isFunction } = require("../util")
+
+let assertFunctionality = (functionality, property) => {
+  if (!functionality) { throw new Error(`[testr] non-existing property '${property}'`) }
+  if (!isFunction(functionality)) { throw new Error(`[testr] '${property}' must be a function`) }
+}
 
 let processSpecifications = (targetUnit, specifications) => {
-
   let specsRunResults = []
 
   forEachProperty(specifications, (property, testCases) => {
     let functionality = targetUnit[property]
-    if (!functionality) { throw new Error(`[testr] non-existing property '${property}'`) }
-    if (typeof functionality !== "function") { throw new Error(`[testr] '${property}' must be a function`) }
+    assertFunctionality(functionality, property)
 
     if (Array.isArray(testCases)) {
       let propCaseResults = testCases.map(testCase => testCase(functionality))
@@ -16,7 +19,6 @@ let processSpecifications = (targetUnit, specifications) => {
       throw new Error("[testr] test cases must be specified in an array")
     }
   })
-
   return specsRunResults
 }
 
