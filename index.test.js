@@ -47,7 +47,6 @@ module.exports = {
       expect(results[0].results[0].success).to.be.true
       expect(results[0].results[1].success).to.be.false
       expect(results[0].results[2].success).to.be.false
-      report(results)
     }
   }
 }

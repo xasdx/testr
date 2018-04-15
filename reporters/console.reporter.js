@@ -23,7 +23,7 @@ let logSuccess = result => logColored(
   "input",
   [COLOR.GREEN, JSON.stringify(result.meta.input)],
   "outputs",
-  [COLOR.GREEN, JSON.stringify(result.meta.output.actual)]
+  [COLOR.GREEN, JSON.stringify(result.meta.output.actual())]
 )
 
 let logFailure = result => {
@@ -37,7 +37,7 @@ let logFailure = result => {
     "should output",
     `${expected},`,
     "but got",
-    [COLOR.RED, JSON.stringify(result.meta.output.actual)]
+    [COLOR.RED, JSON.stringify(result.meta.output.actual())]
   )
 }
 
