@@ -9,6 +9,9 @@ let m = {
 
 module.exports = {
   "testr": {
+    "verifiesInterfaces": () => {
+      expect(() => unit({}).specs({ addTwo: [] })).to.throw(/non-existing/i)
+    },
     "collectsTestCases": () => {
       let results = unit(m).specs({
         addOne: [io(1, 2), io(9, 10)],
