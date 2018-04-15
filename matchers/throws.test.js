@@ -9,7 +9,7 @@ module.exports = {
     "matchesThrowingFunctionality": () => {
       expect(throws.matcherType).to.equal("throws")
       expect(throws.matches(throwingFunction)).to.be.true
-      expect(throws.toString).to.equal("an Error")
+      expect(throws.toString()).to.equal("an Error")
     },
     "rejectsNotThrowingFunctionality": () => {
       expect(throws.matches(notThrowingFunction)).to.be.false

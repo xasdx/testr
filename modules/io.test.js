@@ -1,11 +1,13 @@
 let { expect } = require("chai")
 let { log } = require("../util")
 let { type } = require("../matchers/type.matcher")
+let { throws } = require("../matchers/throws.matcher")
 let { io } = require("./io.module")
 
 let m = {
   addOne: n => n + 1,
-  multiply: (n, m) => n * m
+  multiply: (n, m) => n * m,
+  throwingFunction: (n) => { throw new Error() }
 }
 
 module.exports = {
@@ -16,7 +18,7 @@ module.exports = {
       expect(ioResult.moduleType).to.equal("io")
       expect(ioResult.meta.input[0]).to.equal(9)
       expect(ioResult.meta.output.expected).to.equal(10)
-      expect(ioResult.meta.output.actual).to.equal(10)
+      expect(ioResult.meta.output.actual()).to.equal(10)
     },
     "rejectsIncorrectResults": () => {
       let ioResult = io(9, 11).execute(m.addOne)
@@ -31,6 +33,13 @@ module.exports = {
       let otherIoResult = io(4, type.boolean).execute(m.addOne)
       expect(ioResult.success).to.be.true
       expect(ioResult.meta.output.expected.matcherType).to.equal("type")
+      expect(otherIoResult.success).to.be.false
+    },
+    "executesThrowsMatchers": () => {
+      let ioResult = io("any", throws).execute(m.throwingFunction)
+      let otherIoResult = io(0, throws).execute(m.addOne)
+      expect(ioResult.success).to.be.true
+      expect(ioResult.meta.output.expected.matcherType).to.equal("throws")
       expect(otherIoResult.success).to.be.false
     }
   }

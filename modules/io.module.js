@@ -3,15 +3,18 @@ let { log } = require("../util")
 let MODULE_TYPE = "io"
 
 let MATCHER_TYPE = {
-  TYPE: "type"
+  TYPE: "type",
+  THROWS: "throws"
 }
 
-let evaluateMatcher = (matcher, value) => {
+let evaluateMatcher = (matcher, functionality) => {
   switch (matcher.matcherType) {
     case MATCHER_TYPE.TYPE:
-      return matcher.matches(value)
+      return matcher.matches(functionality)
+    case MATCHER_TYPE.THROWS:
+      return matcher.matches(functionality)
     default: // it is a primitive
-      return matcher === value
+      return matcher === functionality()
   }
 }
 
@@ -27,15 +30,15 @@ let io = function () {
   return {
     moduleType: MODULE_TYPE,
     execute: f => {
-      let result = f(...args)
+      let functionality = () => f(...args)
       let ioResult = {
-        success: evaluateMatcher(matcher, result),
+        success: evaluateMatcher(matcher, functionality),
         moduleType: MODULE_TYPE,
         meta: {
           input: args,
           output: {
             expected: matcher,
-            actual: result
+            actual: functionality
           }
         }
       }

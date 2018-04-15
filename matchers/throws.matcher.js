@@ -12,7 +12,7 @@ let matcher = f => {
 let throws = {
   matcherType: TYPE,
   matches: matcher,
-  toString: "an Error"
+  toString: () => "an Error"
 }
 
 module.exports = { throws }

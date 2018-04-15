@@ -2,7 +2,7 @@ let { is } = require("../util")
 
 let TYPE = "type"
 
-let typeMatcher = (matches, toString) => ({ matcherType: TYPE, matches, toString })
+let typeMatcher = (matcher, toString) => ({ matcherType: TYPE, matches: f => matcher(f()), toString })
 
 let type = {
   boolean: typeMatcher(is.boolean, () => "a boolean value"),
