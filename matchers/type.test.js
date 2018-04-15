@@ -10,6 +10,7 @@ module.exports = {
       expect(matcher.matches("true")).to.be.false
       expect(matcher.matches("")).to.be.false
       expect(matcher.matches(0)).to.be.false
+      expect(matcher.toString()).to.equal("a boolean value")
     },
     "matchesNumbers": () => {
       let matcher = type.number
@@ -18,6 +19,7 @@ module.exports = {
       expect(matcher.matches("")).to.be.false
       expect(matcher.matches("2")).to.be.false
       expect(matcher.matches(true)).to.be.false
+      expect(matcher.toString()).to.equal("a numeric value")      
     }
   }
 }
