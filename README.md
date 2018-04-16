@@ -33,13 +33,13 @@ unit({ addOne, multiply, findUsers }).specs({
     io(mockRepository, { country: "Hungary" }, like([{ name: type.string }])),
     io(mockRepository, {}, [
       called(mockRepository.find, {}),
-      outputs(result => console.log(result.length))
+      result => console.log(result.length)
     ])
   ]
 })
 ```
 
-It has a built-in reporter, which logs to the console, displaying some information and indicating the success of the test cases:
+It has a built-in reporter logging to the console, indicating the success of the test cases:
 
 ```
 -- addOne
@@ -48,6 +48,18 @@ It has a built-in reporter, which logs to the console, displaying some informati
  - io # input [0] should output an Error, but got 1
 ```
 
+Modules:
+
+io - ideal for testing pure functions, expecting a value for a given input
+
+```javascript
+io(5, 6) // gets called with 5, returns 6
+io(3, 4, 12) // gets called with 3 and 4, outputs 12
+io(9, type.number) // last parameter might be the expected value or a matcher (like type.number)
+io({ io: [6, 0], out: 0 }) // input and output values might be specified more explicitly by passing an object
+io(5, x => x > 0) // lambdas function as custom matchers
+io(5, [type.number, x => x % 2 === 0]) // multiple matchers can be supplied in an array
+```
 Matchers:
 
 type
