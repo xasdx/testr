@@ -48,6 +48,16 @@ It has a built-in reporter logging to the console, indicating the success of the
  - io # input [0] should output an Error, but got 1
 ```
 
+Runners:
+
+unit - wraps a module as the 'under test' subject
+
+```javascript
+unit({ calculate: n => n + 1 }).specs({
+  calculate: [] // specifies particular test cases for the calculate functionality
+})
+```
+
 Modules:
 
 io - ideal for testing pure functions, expecting a value for a given input
@@ -62,14 +72,14 @@ io(5, [type.number, x => x % 2 === 0]) // multiple matchers can be supplied in a
 ```
 Matchers:
 
-type
+type - asserts the types of return values
 
 ```javascript
 io(1, type.number)
 io(1, type.boolean)
 ```
 
-throws
+throws - asserts that a functionality throws an Error
 
 ```javascript
 io(null, throws)
