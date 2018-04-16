@@ -75,13 +75,13 @@ Matchers:
 type - asserts the types of return values
 
 ```javascript
-io(1, type.number)
-io(1, type.boolean)
+io(1, type.number) // asserts a number return value
+io(1, type.boolean) // asserts a boolean return value
 ```
 
 throws - asserts that a functionality throws an Error
 
 ```javascript
-io(null, throws)
-io(null, throwsLike(/bad happened/i))
+io(null, throws) // asserts a throwing functionality
+io(null, throwsLike(/bad happened/i)) // asserts that an Error with message containing 'bad happened' was thrown
 ```
