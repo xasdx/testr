@@ -9,10 +9,21 @@ let matcher = f => {
   }
 }
 
+let messageMatcher = msg => f => {
+  try {
+    f()
+    return false
+  } catch (err) {
+    return msg.test(err.message) ? true : false
+  }
+}
+
 let throws = {
   matcherType: TYPE,
   matches: matcher,
   toString: () => "an Error"
 }
 
-module.exports = { throws }
+let throwsLike = messageRegex => Object.assign({}, throws, { matches: messageMatcher(messageRegex) })
+
+module.exports = { throws, throwsLike }
