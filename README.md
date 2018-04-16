@@ -47,3 +47,19 @@ It has a built-in reporter, which logs to the console, displaying some informati
  - io # input [1] should output a boolean value, but got 2
  - io # input [0] should output an Error, but got 1
 ```
+
+Matchers:
+
+type
+
+```javascript
+io(1, type.number)
+io(1, type.boolean)
+```
+
+throws
+
+```javascript
+io(null, throws)
+io(null, throwsLike(/bad happened/i))
+```
