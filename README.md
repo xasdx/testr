@@ -31,7 +31,10 @@ unit({ addOne, multiply, findUsers }).specs({
   ],
   findUsers: [
     io(mockRepository, { country: "Hungary" }, like([{ name: type.string }])),
-    io(mockRepository, {}, is(result => console.log(result.length)))
+    io(mockRepository, {}, [
+      called(mockRepository.find, {}),
+      outputs(result => console.log(result.length))
+    ])
   ]
 })
 ```
@@ -42,4 +45,5 @@ It has a built-in reporter, which logs to the console, displaying some informati
 -- addOne
  + io # input [1] outputs 2
  - io # input [1] should output a boolean value, but got 2
+ - io # input [0] should output an Error, but got 1
 ```

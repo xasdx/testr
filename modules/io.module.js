@@ -2,22 +2,9 @@ let { log } = require("../util")
 
 let MODULE_TYPE = "io"
 
-let MATCHER_TYPE = {
-  TYPE: "type",
-  THROWS: "throws"
-}
-
-let evaluateMatcher = (matcher, functionality) => {
-  switch (matcher.matcherType) {
-    case MATCHER_TYPE.TYPE:
-      return matcher.matches(functionality)
-    case MATCHER_TYPE.THROWS:
-      return matcher.matches(functionality)
-    default: // it is a primitive
-      return matcher === functionality()
-  }
-}
-
+let evaluateMatcher = (matcher, functionality) => matcher.matcherType ? matcher.matches(functionality)
+                                                                      : matcher === functionality()
+                                                                      
 let parseArguments = arguments => {
   let args = [...arguments]
   let matcher = args.splice(-1)[0]
