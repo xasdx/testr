@@ -23,24 +23,23 @@ module.exports = { addOne, multiply, findUsers }
 ```
 
 And since you care about your code, you are contemplating if you should add test coverage or not.
-You have time constraints, so need this fast and you hate boilerplate anyways.
+
+You have time constraints, so you need this fast and you hate boilerplate anyways.
 
 Testr lets you write specs like below:
 
 ```javascript
-let { unit, io, throws, random, type, like, is } = require("testr")
+let { unit, io, throws, random, type, like, called } = require("testr")
 
 unit({ addOne, multiply, findUsers }).specs({
   addOne: [
     io(5, 6),
     io(9, type.number),
     io(true, throws),
-    io(random.number, type.number)
+    io(random.number, type.number),
+    io({ in: [6], out: 7 })
   ],
-  multiply: [
-    io(3, 4, 12),
-    io({ in: [6, 0], out: 0 })
-  ],
+  multiply: io(3, 4, 12),
   findUsers: [
     io(mockRepository, { country: "Hungary" }, like([{ name: type.string }])),
     io(mockRepository, {}, [
@@ -137,15 +136,26 @@ Asserts that the result object (or array) is structured like it is expected.
 ```javascript
 // asserts that the result is an object with exactly two properties
 io({ name: "paul" }, structured({ name: type.string, age: type.number }))
-// the result is an array containing object with the specified schema
+// the result is an array containing objects with the specified schema
 io({ name: "paul" }, structured([{ name: type.string, age: type.number }]))
+```
+
+#### called
+
+Verifies interactions performed on mocks and spies.
+
+```javascript
+{
+  findUsers: io({}, called(mockRepository.find, {}, { times: 1 }) // find method was called on mockRepository with '{}' once
+}
 ```
 
 ### Test doubles:
 
 #### spy
 
-A spy wraps particular functionalities and maintains metadata about their behavior,
+A spy wraps functionalities and maintains metadata about their behavior,
+
 for example the number of times a method was called and the arguments it was called with.
 
 ```javascript
@@ -159,7 +169,7 @@ aSpy.addOne.invocations[0] // { in: [3] }
 
 #### default reporter
 
-It has a built-in default reporter logging to the console, indicating the success of the test cases.
+Testr has a built-in, default reporter logging to the console, indicating the success of the test cases.
 
 ```
 -- addOne
