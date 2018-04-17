@@ -11,39 +11,44 @@ let COLOR = {
 }
 
 let colorize = function () {
-  return [...arguments].map(token => is.array(token) ? token[0].replace("%s", token[1]) : token).join(" ")
+  return [...arguments].map(token => is.array(token) ? token[0].replace("%s", token[1]) : token).join("")
 }
 
 let logColored = function () { console.log(colorize(...arguments)) }
 
 let logSuccess = result => logColored(
-  [COLOR.GREEN, " +"],
+  [COLOR.GREEN, " + "],
   result.moduleType,
-  "#",
-  "input",
+  " # ",
+  "input ",
   [COLOR.GREEN, JSON.stringify(result.meta.input)],
-  "outputs",
+  " outputs ",
   [COLOR.GREEN, JSON.stringify(result.meta.output.actual())]
 )
 
 let logFailure = result => {
   let expected = isMatcher(result.meta.output.expected) ? result.meta.output.expected.toString() : result.meta.output.expected
   logColored(
-    [COLOR.RED, " -"],
+    [COLOR.RED, " - "],
     result.moduleType,
-    "#",
-    "input",
+    " # ",
+    "input ",
     [COLOR.RED, JSON.stringify(result.meta.input)],
-    "should output",
+    " should output ",
     `${expected},`,
-    "but got",
+    " but got ",
     [COLOR.RED, JSON.stringify(result.meta.output.actual())]
   )
 }
 
 let reporter = testResults => {
   testResults.forEach(testResult => {
-    logColored([COLOR.YELLOW, "--"], testResult.property)
+    logColored(
+      "\n",
+      [COLOR.YELLOW, "-- "],
+      testResult.property,
+      "\n"
+    )
     testResult.results.forEach(result => {
       switch (result.moduleType) {
         case TYPE_IO:

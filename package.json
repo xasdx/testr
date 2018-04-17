@@ -4,8 +4,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./**/*.test.js --ui exports --recursive --reporter spec --check-leaks",
-    "test-watch": "mocha ./**/*.test.js --ui exports --recursive --reporter spec --check-leaks --watch"
+    "test": "mocha **/*.test.js index.test.js --ui exports --recursive --reporter spec --check-leaks",
+    "test-watch": "mocha **/*.test.js index.test.js --ui exports --recursive --reporter spec --check-leaks --watch"
   },
   "devDependencies": {
     "chai": "4.1.2",

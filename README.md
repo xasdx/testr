@@ -177,6 +177,9 @@ Testr has a built-in, default reporter logging to the console, indicating the su
  + io # input [1] outputs 2
  - io # input [1] should output a boolean value, but got 2
  - io # input [0] should output an Error, but got 1
+-- findUser
+ + io # input [{}] outputs {"name":"paul"}
+ - io # input [{}] should output an object like {"name":"paul","age":13}, but got {"name":"paul"}
 ```
 
 ```javascript

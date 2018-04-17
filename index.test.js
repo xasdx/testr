@@ -1,10 +1,11 @@
 let { expect } = require("chai")
 let { log } = require("./util")
-let { unit, io, type, throws, report } = require(".")
+let { unit, io, type, throws, like, report } = require(".")
 
 let m = {
   addOne: n => n + 1,
-  subtractTwo: n => n - 2
+  subtractTwo: n => n - 2,
+  findUser: () => ({ name: "paul" })
 }
 
 module.exports = {
@@ -40,13 +41,21 @@ module.exports = {
           io(1, type.number),
           io(1, type.boolean),
           io(0, throws)
+        ],
+        findUser: [
+          io({}, like({ name: "paul" })),
+          io({}, like({ name: "paul", age: 13 }))
         ]
       })
-      expect(results).to.have.lengthOf(1)
+      expect(results).to.have.lengthOf(2)
       expect(results[0].results).to.have.lengthOf(3)
       expect(results[0].results[0].success).to.be.true
       expect(results[0].results[1].success).to.be.false
       expect(results[0].results[2].success).to.be.false
+      expect(results[1].results).to.have.lengthOf(2)
+      expect(results[1].results[0].success).to.be.true
+      expect(results[1].results[1].success).to.be.false
+      report(results)
     }
   }
 }
