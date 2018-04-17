@@ -1,9 +1,5 @@
 let { is } = require("../util")
 
-let TYPE_IO = "io"
-
-let isMatcher = obj => obj.matcherType !== undefined
-
 let COLOR = {
   YELLOW: "\x1b[33m%s\x1b[0m",
   GREEN: "\x1b[32m%s\x1b[0m",
@@ -16,48 +12,28 @@ let colorize = function () {
 
 let logColored = function () { console.log(colorize(...arguments)) }
 
-let logSuccess = result => logColored(
+let onFunctionality = ({ name }) => logColored("\n", [COLOR.YELLOW, "-- "], name, "\n")
+
+let onIoSuccess = ({ module, input, actual }) => logColored(
   [COLOR.GREEN, " + "],
-  result.moduleType,
+  module,
   " # ",
   "input ",
-  [COLOR.GREEN, JSON.stringify(result.meta.input)],
+  [COLOR.GREEN, JSON.stringify(input)],
   " outputs ",
-  [COLOR.GREEN, JSON.stringify(result.meta.output.actual())]
+  [COLOR.GREEN, JSON.stringify(actual)]
 )
 
-let logFailure = result => {
-  let expected = isMatcher(result.meta.output.expected) ? result.meta.output.expected.toString() : result.meta.output.expected
-  logColored(
-    [COLOR.RED, " - "],
-    result.moduleType,
-    " # ",
-    "input ",
-    [COLOR.RED, JSON.stringify(result.meta.input)],
-    " should output ",
-    `${expected},`,
-    " but got ",
-    [COLOR.RED, JSON.stringify(result.meta.output.actual())]
-  )
-}
+let onIoFailure = ({ module, input, actual, expected }) => logColored(
+  [COLOR.RED, " - "],
+  module,
+  " # ",
+  "input ",
+  [COLOR.RED, JSON.stringify(input)],
+  " should output ",
+  `${expected},`,
+  " but got ",
+  [COLOR.RED, JSON.stringify(actual)]
+)
 
-let reporter = testResults => {
-  testResults.forEach(testResult => {
-    logColored(
-      "\n",
-      [COLOR.YELLOW, "-- "],
-      testResult.property,
-      "\n"
-    )
-    testResult.results.forEach(result => {
-      switch (result.moduleType) {
-        case TYPE_IO:
-          return result.success ? logSuccess(result) : logFailure(result)
-        default:
-          throw new Error(`[reporter] result type ${result.moduleType} is not supported`)
-      }
-    })
-  })
-}
-
-module.exports = { reporter }
+module.exports = { consoleReporter: { onFunctionality, onIoSuccess, onIoFailure } }
