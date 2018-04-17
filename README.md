@@ -4,6 +4,8 @@
 
 > A test framework with zero dependencies
 
+## What is this
+
 ```javascript
 let { unit, io, throws, random, type, like, is } = require("testr")
 
@@ -48,9 +50,11 @@ It has a built-in reporter logging to the console, indicating the success of the
  - io # input [0] should output an Error, but got 1
 ```
 
-Runners:
+### Runners:
 
-unit - wraps a module as the 'under test' subject
+#### unit
+
+Wraps a module as the 'under test' subject.
 
 ```javascript
 unit({ calculate: n => n + 1 }).specs({
@@ -64,9 +68,11 @@ unit("../services/user.service").specs({ findUsers: [] })
 unit("../services/user.service", { mocked: { "../repositories/userRepository": mockUserRepository } }).specs({ findUsers: [] })
 ```
 
-Modules:
+### Modules:
 
-io - ideal for testing pure functions, expecting a value for a given input
+#### io
+
+Ideal for testing pure functions, expecting a value for a given input.
 
 ```javascript
 io(5, 6) // gets called with 5, returns 6
@@ -76,16 +82,23 @@ io({ io: [6, 0], out: 0 }) // input and output values might be specified more ex
 io(5, x => x > 0) // lambdas function as custom matchers
 io(5, [type.number, x => x % 2 === 0]) // multiple matchers can be supplied in an array
 ```
-Matchers:
 
-type - asserts the types of return values
+### Matchers:
+
+Matchers can be used in combination with the io module, their purpose is to help express assertions on test results.
+
+#### type
+
+Asserts that a return value has a specific type.
 
 ```javascript
 io(1, type.number) // asserts a number return value
 io(1, type.boolean) // asserts a boolean return value
 ```
 
-throws - asserts that a functionality throws an Error
+#### throws
+
+Asserts that a functionality throws an Error.
 
 ```javascript
 io(null, throws) // asserts a throwing functionality
