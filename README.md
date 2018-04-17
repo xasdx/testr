@@ -115,7 +115,8 @@ io(null, throwsLike(/bad happened/i)) // asserts that an Error with message cont
 Asserts that the result object (or array) is like it is expected.
 
 ```javascript
-io({ name: "paul" }, like({ name: "paul", age: 23 })) // the result object contains the specified properties with exact values
+// asserts the result object to contain the specified properties with exact values
+io({ name: "paul" }, like({ name: "paul", age: 23 }))
 ```
 
 #### exactly
@@ -123,8 +124,10 @@ io({ name: "paul" }, like({ name: "paul", age: 23 })) // the result object conta
 Asserts that the result object (or array) is exactly like it is expected.
 
 ```javascript
-io({ name: "paul" }, exactly({ name: "paul", age: 23 })) // the result object contains only the specified properties with exact values
-io({ name: "paul" }, exactly([{ name: "paul", age: 5 }, { name: "paul", age: 6 }])) // the result array contains the exact values
+// asserts the result object to contain only the specified properties with exact values
+io({ name: "paul" }, exactly({ name: "paul", age: 23 }))
+// the result array contains the exact values
+io({ name: "paul" }, exactly([{ name: "paul", age: 5 }, { name: "paul", age: 6 }]))
 ```
 
 #### structured
@@ -132,8 +135,10 @@ io({ name: "paul" }, exactly([{ name: "paul", age: 5 }, { name: "paul", age: 6 }
 Asserts that the result object (or array) is structured like it is expected.
 
 ```javascript
-io({ name: "paul" }, structured({ name: type.string, age: type.number })) // the result is an object with exactly two properties
-io({ name: "paul" }, structured([{ name: type.string, age: type.number }])) // the result is an array containing object with the specified schema
+// asserts that the result is an object with exactly two properties
+io({ name: "paul" }, structured({ name: type.string, age: type.number }))
+// the result is an array containing object with the specified schema
+io({ name: "paul" }, structured([{ name: type.string, age: type.number }]))
 ```
 
 ### Test doubles:
@@ -169,5 +174,3 @@ let { unit, report } = require("testr")
 let results = unit(myModule).specs(mySpecs)
 report(results)
 ```
-
-
