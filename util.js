@@ -8,6 +8,12 @@ let forEachProperty = (obj, f) => {
   }
 }
 
+let collectProperties = obj => {
+  let props = []
+  forEachProperty(obj, (key, value) => props.push({ key, value }))
+  return props
+}
+
 let log = obj => console.log(inspect(obj, false, null))
 
 let isFunction = obj => typeof obj === "function"
@@ -20,6 +26,7 @@ let isArray = obj => Array.isArray(obj)
 
 module.exports = {
   forEachProperty,
+  collectProperties,
   log,
   is: {
     function: isFunction,

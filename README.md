@@ -146,7 +146,8 @@ Verifies interactions performed on mocks and spies.
 
 ```javascript
 {
-  findUsers: io({}, called(mockRepository.find, {}, { times: 1 }) // find method was called on mockRepository with '{}' once
+  // 'find' method was called on mockRepository with '{}' once
+  findUsers: io({}, called(mockRepository.find, {}, { times: 1 })
 }
 ```
 
