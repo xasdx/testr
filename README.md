@@ -4,11 +4,11 @@
 
 > A test framework with zero dependencies
 
-## What is this
+## Introduction
+
+Let us assume you are working on the following module:
 
 ```javascript
-let { unit, io, throws, random, type, like, is } = require("testr")
-
 let addOne = n => n + 1
 let multiply = (n, m) => n * m
 let findUsers = (repository, query) => {
@@ -19,6 +19,16 @@ let findUsers = (repository, query) => {
     }
   })
 }
+module.exports = { addOne, multiply, findUsers }
+```
+
+And since you care about your code, you are contemplating if you should add test coverage or not.
+You have time constraints, so need this fast and you hate boilerplate anyways.
+
+Testr lets you write specs like below:
+
+```javascript
+let { unit, io, throws, random, type, like, is } = require("testr")
 
 unit({ addOne, multiply, findUsers }).specs({
   addOne: [
@@ -41,15 +51,6 @@ unit({ addOne, multiply, findUsers }).specs({
 })
 ```
 
-It has a built-in reporter logging to the console, indicating the success of the test cases:
-
-```
--- addOne
- + io # input [1] outputs 2
- - io # input [1] should output a boolean value, but got 2
- - io # input [0] should output an Error, but got 1
-```
-
 ### Runners:
 
 #### unit
@@ -64,8 +65,12 @@ unit({ calculate: n => n + 1 }).specs({
 // can load external modules directly by calling unit with a path
 unit("../services/user.service").specs({ findUsers: [] })
 
-// it also supports the mocking of `require` statements in node.js, by passing a config object with the desired mocks to unit:
-unit("../services/user.service", { mocked: { "../repositories/userRepository": mockUserRepository } }).specs({ findUsers: [] })
+// it also supports the mocking of `require` statements in node.js
+// by passing a config object with the desired mocks to unit
+unit(
+  "../services/user.service",
+  { mocked: { "../repositories/userRepository": mockUserRepository } }
+).specs({ findUsers: [] })
 ```
 
 ### Modules:
@@ -101,6 +106,68 @@ io(1, type.boolean) // asserts a boolean return value
 Asserts that a functionality throws an Error.
 
 ```javascript
-io(null, throws) // asserts a throwing functionality
+io(null, throws) // asserts that the functionality throws an Error
 io(null, throwsLike(/bad happened/i)) // asserts that an Error with message containing 'bad happened' was thrown
 ```
+
+#### like
+
+Asserts that the result object (or array) is like it is expected.
+
+```javascript
+io({ name: "paul" }, like({ name: "paul", age: 23 })) // the result object contains the specified properties with exact values
+```
+
+#### exactly
+
+Asserts that the result object (or array) is exactly like it is expected.
+
+```javascript
+io({ name: "paul" }, exactly({ name: "paul", age: 23 })) // the result object contains only the specified properties with exact values
+io({ name: "paul" }, exactly([{ name: "paul", age: 5 }, { name: "paul", age: 6 }])) // the result array contains the exact values
+```
+
+#### structured
+
+Asserts that the result object (or array) is structured like it is expected.
+
+```javascript
+io({ name: "paul" }, structured({ name: type.string, age: type.number })) // the result is an object with exactly two properties
+io({ name: "paul" }, structured([{ name: type.string, age: type.number }])) // the result is an array containing object with the specified schema
+```
+
+### Test doubles:
+
+#### spy
+
+A spy wraps particular functionalities and maintains metadata about their behavior,
+for example the number of times a method was called and the arguments it was called with.
+
+```javascript
+let aSpy = spy({ addOne: n => n + 1 })
+aSpy.addOne(3)
+aSpy.addOne.numberOfInvocations // is 1
+aSpy.addOne.invocations[0] // { in: [3] }
+```
+
+### Reporting:
+
+#### default reporter
+
+It has a built-in default reporter logging to the console, indicating the success of the test cases.
+
+```
+-- addOne
+ + io # input [1] outputs 2
+ - io # input [1] should output a boolean value, but got 2
+ - io # input [0] should output an Error, but got 1
+```
+
+```javascript
+let { unit, report } = require("testr")
+
+let results = unit(myModule).specs(mySpecs)
+report(results)
+```
+
+
