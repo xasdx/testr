@@ -52,7 +52,7 @@ unit({ addOne, multiply, findUsers }).specs({
 
 ## Api
 
-### Runners:
+### Runners
 
 #### unit
 
@@ -74,7 +74,7 @@ unit(
 ).specs({ findUsers: [] })
 ```
 
-### Modules:
+### Modules
 
 #### io
 
@@ -89,7 +89,7 @@ io(5, x => x > 0) // lambdas function as custom matchers
 io(5, [type.number, x => x % 2 === 0]) // multiple matchers can be supplied in an array
 ```
 
-### Matchers:
+### Matchers
 
 Matchers can be used in combination with the io module, their purpose is to help express assertions on test results.
 
@@ -153,7 +153,7 @@ Verifies interactions performed on mocks and spies.
 }
 ```
 
-### Test doubles:
+### Test doubles
 
 #### spy
 
@@ -168,7 +168,7 @@ aSpy.addOne.numberOfInvocations // is 1
 aSpy.addOne.invocations[0] // { in: [3] }
 ```
 
-### Reporting:
+### Reporting
 
 #### default reporter
 

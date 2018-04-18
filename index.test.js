@@ -1,7 +1,6 @@
 let { expect } = require("chai")
 let { log } = require("./util")
 let { unit, io, type, throws, like, report } = require(".")
-let { consoleReporter } = require("./reporters/console.reporter")
 
 let m = {
   addOne: n => n + 1,
@@ -56,6 +55,7 @@ module.exports = {
       expect(results[1].results).to.have.lengthOf(2)
       expect(results[1].results[0].success).to.be.true
       expect(results[1].results[1].success).to.be.false
+      // report({ results })
     }
   }
 }
