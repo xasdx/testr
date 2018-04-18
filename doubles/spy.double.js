@@ -10,14 +10,14 @@ let spyFunction = f => {
   return spiedFunction
 }
 
-let spy = obj => {
-  return collectProperties(obj).map(({ key, value }) => is.function(value) ? { key: key, value: spyFunction(value) } : {})
-                               .reduce((acc, current) => {
-    if (current.value) {
-      acc[current.key] = current.value
-    }
-    return acc
-  }, {})
+let mergeProperties = (acc, current) => {
+  if (current.value) {
+    acc[current.key] = current.value
+  }
+  return acc
 }
+
+let spy = obj => collectProperties(obj).map(({ key, value }) => is.function(value) ? { key: key, value: spyFunction(value) } : {})
+                               .reduce(mergeProperties, {})
 
 module.exports = { spy }
