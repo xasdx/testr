@@ -1,19 +1,23 @@
-let { forEachProperty, is } = require("../util")
+let { collectProperties, is } = require("../util")
+
+let spyFunction = f => {
+  let invocations = []
+  let spiedFunction = function () {
+    invocations.push({ in: [...arguments] })
+    return f(...arguments)
+  }
+  spiedFunction.invocations = invocations
+  return spiedFunction
+}
 
 let spy = obj => {
-  let spyObject = {}
-  forEachProperty(obj, (key, value) => {
-    if (is.function(value)) {
-      let invocations = []
-      let spiedFunction = function () {
-        invocations.push({ in: [...arguments] })
-        return value(...arguments)
-      }
-      spiedFunction.invocations = invocations
-      spyObject[key] = spiedFunction
+  return collectProperties(obj).map(({ key, value }) => is.function(value) ? { key: key, value: spyFunction(value) } : {})
+                               .reduce((acc, current) => {
+    if (current.value) {
+      acc[current.key] = current.value
     }
-  })
-  return spyObject
+    return acc
+  }, {})
 }
 
 module.exports = { spy }
