@@ -1,5 +1,7 @@
 # @testr/doublr
 
+> Testr submodule to substitute dependencies with test doubles, like spies and mocks
+
 ## Api
 
 ### spy

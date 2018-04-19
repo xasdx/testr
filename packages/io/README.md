@@ -1,5 +1,7 @@
 # @testr/io
 
+> Testr submodule to create concise test cases to be executed by runnr
+
 ## Api
 
 ### io

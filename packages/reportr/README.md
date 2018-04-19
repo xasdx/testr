@@ -1,5 +1,7 @@
 # @testr/reportr
 
+> Testr submodule to report test results using custom reporters
+
 ## Api
 
 ### default reporter

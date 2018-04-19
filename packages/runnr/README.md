@@ -1,5 +1,7 @@
 # @testr/runnr
 
+> Testr submodule to run simple unit tests
+
 ## Api
 
 ### unit

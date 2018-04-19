@@ -6,10 +6,13 @@
 
 ## Packages
 
-[@testr/runnr](https://github.com/xasdx/testr/tree/master/packages/doublr/README.md) - Runs unit tests.
-[@testr/io](https://github.com/xasdx/testr/tree/master/packages/io/README.md) - Creates concise test cases to be executed by runnr.
-[@testr/reportr](https://github.com/xasdx/testr/tree/master/packages/reportr/README.md) - Reports test results using custom reporters. Default console reporter implementation included.
-[@testr/doublr](https://github.com/xasdx/testr/tree/master/packages/doublr/README.md) - Substitutes dependencies with test doubles, like spies and mocks.
+[`@testr/runnr`](https://github.com/xasdx/testr/tree/master/packages/doublr/README.md) - Runs unit tests.
+
+[`@testr/io`](https://github.com/xasdx/testr/tree/master/packages/io/README.md) - Creates concise test cases to be executed by runnr.
+
+[`@testr/reportr`](https://github.com/xasdx/testr/tree/master/packages/reportr/README.md) - Reports test results using custom reporters. Default console reporter implementation included.
+
+[`@testr/doublr`](https://github.com/xasdx/testr/tree/master/packages/doublr/README.md) - Substitutes dependencies with test doubles, like spies and mocks.
 
 ## Example
 
@@ -29,11 +32,10 @@ let findUsers = (repository, query) => {
 module.exports = { addOne, multiply, findUsers }
 ```
 
-And since you care about your code, you are contemplating if you should add test coverage or not.
-
+And since you care about your code, you are contemplating if you should add test coverage or not. 
 You have time constraints, so you need this fast and you hate boilerplate anyways.
 
-Testr lets you write specs like below:
+With testr you can write concise specs like:
 
 ```javascript
 let { unit, io, throws, random, type, like, called } = require("testr")
