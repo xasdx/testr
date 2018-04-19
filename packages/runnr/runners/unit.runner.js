@@ -1,4 +1,4 @@
-let { forEachProperty, is } = require("@testr/common")
+let { forEachProperty, is } = require("../../common")
 
 let assertFunctionality = (functionality, property) => {
   if (!functionality) { throw new Error(`[testr] non-existing property '${property}'`) }

@@ -1,5 +1,5 @@
 let { expect } = require("chai")
-let { type } = require("./type.matcher")
+let { type } = require("../../matchers/type.matcher")
 
 module.exports = {
   "type.matcher": {

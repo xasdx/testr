@@ -1,4 +1,4 @@
-let { is } = require("@testr/common")
+let { is } = require("../../common")
 
 let COLOR = {
   YELLOW: "\x1b[33m%s\x1b[0m",

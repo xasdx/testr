@@ -1,8 +1,7 @@
 let { expect } = require("chai")
-let { log } = require("../util")
 let { type } = require("../matchers/type.matcher")
 let { throws } = require("../matchers/throws.matcher")
-let { io } = require("./io.module")
+let { io } = require("..")
 
 let m = {
   addOne: n => n + 1,

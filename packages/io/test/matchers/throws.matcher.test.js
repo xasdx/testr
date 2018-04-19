@@ -1,5 +1,5 @@
 let { expect } = require("chai")
-let { throws, throwsLike } = require("./throws.matcher")
+let { throws, throwsLike } = require("../../matchers/throws.matcher")
 
 let throwingFunction = () => { throw new Error("Something very bad happened") }
 let notThrowingFunction = () => {}

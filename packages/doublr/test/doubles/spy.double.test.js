@@ -1,5 +1,5 @@
 let { expect } = require("chai")
-let { spy } = require("./spy.double")
+let { spy } = require("../../doubles/spy.double")
 
 let obj = { add: (a, b) => a + b, increase: n => n + 1 }
 

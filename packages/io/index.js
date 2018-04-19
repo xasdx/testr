@@ -1,4 +1,4 @@
-let { log } = require("@testr/common")
+let { log } = require("../common")
 
 let matchers = require("./matchers")
 

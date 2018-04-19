@@ -1,4 +1,4 @@
-let { collectProperties, is } = require("@testr/common")
+let { collectProperties, is } = require("../../common")
 
 let spyFunction = f => {
   let invocations = []
