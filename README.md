@@ -1,3 +1,4 @@
+
 # testr
 
 [![Build Status](https://travis-ci.org/xasdx/testr.svg?branch=master)](https://travis-ci.org/xasdx/testr)
@@ -6,13 +7,14 @@
 
 ## Packages
 
-[`@testr/runnr`](https://github.com/xasdx/testr/tree/master/packages/doublr/README.md) - Runs unit tests.
+This monorepo contains all subpackages related to the __Testr__ framework.
 
-[`@testr/io`](https://github.com/xasdx/testr/tree/master/packages/io/README.md) - Creates concise test cases to be executed by runnr.
-
-[`@testr/reportr`](https://github.com/xasdx/testr/tree/master/packages/reportr/README.md) - Reports test results using custom reporters. Default console reporter implementation included.
-
-[`@testr/doublr`](https://github.com/xasdx/testr/tree/master/packages/doublr/README.md) - Substitutes dependencies with test doubles, like spies and mocks.
+| Version | Package | Description |
+|--------|-------|------------|
+| Not released |[`@testr/runnr`](https://github.com/xasdx/testr/tree/master/packages/doublr) | Runs simple unit tests |
+| Not released | [`@testr/io`](https://github.com/xasdx/testr/tree/master/packages/io) | Creates concise test cases to be executed by `@testr/runnr` |
+| Not released | [`@testr/reportr`](https://github.com/xasdx/testr/tree/master/packages/reportr) | Reports test results using custom reporters<br>Default console reporter included |
+| Not released | [`@testr/doublr`](https://github.com/xasdx/testr/tree/master/packages/doublr) | Substitutes dependencies with test doubles,<br>like spies and mocks |
 
 ## Example
 
@@ -20,7 +22,9 @@ Let us assume you are working on the following module:
 
 ```javascript
 let addOne = n => n + 1
+
 let multiply = (n, m) => n * m
+
 let findUsers = (repository, query) => {
   let users = repository.find(query)
   return users.map(user => {
@@ -29,11 +33,11 @@ let findUsers = (repository, query) => {
     }
   })
 }
+
 module.exports = { addOne, multiply, findUsers }
 ```
 
-And since you care about your code, you are contemplating if you should add test coverage or not. 
-You have time constraints, so you need this fast and you hate boilerplate anyways.
+And since you care about your code, you are contemplating to add some test coverage.  You have time constraints, so you need this fast and you hate boilerplate anyways.
 
 With testr you can write concise specs like:
 

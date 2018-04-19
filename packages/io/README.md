@@ -1,10 +1,11 @@
+
 # @testr/io
 
-> Testr submodule to create concise test cases to be executed by runnr
+> Testr subpackage to create concise test cases to be executed by `@testr/runnr`
 
 ## Api
 
-### io
+### .io
 
 Ideal for testing pure functions, expecting a value for a given input.
 
@@ -21,7 +22,7 @@ io(5, [type.number, x => x % 2 === 0]) // multiple matchers can be supplied in a
 
 Matchers can be used in combination with the io module, their purpose is to help express assertions on test results.
 
-#### type
+#### .type
 
 Asserts that a return value has a specific type.
 
@@ -30,16 +31,16 @@ io(1, type.number) // asserts a number return value
 io(1, type.boolean) // asserts a boolean return value
 ```
 
-#### throws
+#### .throws
 
 Asserts that a functionality throws an Error.
 
-```javascript
+```.javascript
 io(null, throws) // asserts that the functionality throws an Error
 io(null, throwsLike(/bad happened/i)) // asserts that an Error with message containing 'bad happened' was thrown
 ```
 
-#### like
+#### .like
 
 Asserts that the result object (or array) is like it is expected.
 
@@ -48,7 +49,7 @@ Asserts that the result object (or array) is like it is expected.
 io({ name: "paul" }, like({ name: "paul", age: 23 }))
 ```
 
-#### exactly
+#### .exactly
 
 Asserts that the result object (or array) is exactly like it is expected.
 
@@ -59,7 +60,7 @@ io({ name: "paul" }, exactly({ name: "paul", age: 23 }))
 io({ name: "paul" }, exactly([{ name: "paul", age: 5 }, { name: "paul", age: 6 }]))
 ```
 
-#### structured
+#### .structured
 
 Asserts that the result object (or array) is structured like it is expected.
 
@@ -70,7 +71,7 @@ io({ name: "paul" }, structured({ name: type.string, age: type.number }))
 io({ name: "paul" }, structured([{ name: type.string, age: type.number }]))
 ```
 
-#### called
+#### .called
 
 Verifies interactions performed on mocks and spies.
 

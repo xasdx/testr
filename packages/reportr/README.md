@@ -1,12 +1,13 @@
+
 # @testr/reportr
 
-> Testr submodule to report test results using custom reporters
+> Testr subpackage that reports test results using custom reporters
 
 ## Api
 
 ### default reporter
 
-Testr has a built-in, default reporter logging to the console, indicating the success of the test cases.
+__Reportr__ comes with a default reporter logging to the console, indicating the success of the test cases.
 
 ```
 -- addOne
@@ -19,15 +20,16 @@ Testr has a built-in, default reporter logging to the console, indicating the su
 ```
 
 ```javascript
-let { unit, report } = require("testr")
+let { unit } = require("@testr/runnr")
+let { reporter } = require("@testr/reportr")
 
 let results = unit(myModule).specs(mySpecs)
-report({ results })
+reporter({ results })
 ```
 
 ### custom reporters
 
-Testr can be extended with custom reporters by implementing the following interface:
+__Reportr__ can be extended with custom reporters by implementing the following interface:
 
 ```javascript
 let customReporter = {
@@ -39,5 +41,5 @@ let customReporter = {
 let results = unit(myModule).specs(mySpecs)
 
 // omitting the reporter property causes the framework to fall back to the default console reporter
-report({ results, reporter: customReporter })
+reporter({ results, reporter: customReporter })
 ```

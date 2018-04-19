@@ -1,14 +1,17 @@
+
 # @testr/runnr
 
-> Testr submodule to run simple unit tests
+> Testr subpackage that runs simple unit tests
 
 ## Api
 
-### unit
+### .unit
 
 Wraps a module as the 'under test' subject.
 
 ```javascript
+let { unit } = require("@testr/runnr")
+
 unit({ calculate: n => n + 1 }).specs({
   calculate: [] // specifies particular test cases for the calculate functionality
 })
