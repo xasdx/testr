@@ -13,8 +13,8 @@ This monorepo contains all subpackages related to the __Testr__ framework.
 |--------|-------|------------|
 | Not released |[`@testr/runnr`](https://github.com/xasdx/testr/tree/master/packages/doublr) | Runs simple unit tests |
 | Not released | [`@testr/io`](https://github.com/xasdx/testr/tree/master/packages/io) | Creates concise test cases to be executed by `@testr/runnr` |
-| Not released | [`@testr/reportr`](https://github.com/xasdx/testr/tree/master/packages/reportr) | Reports test results using custom reporters<br>Default console reporter included |
-| Not released | [`@testr/doublr`](https://github.com/xasdx/testr/tree/master/packages/doublr) | Substitutes dependencies with test doubles,<br>like spies and mocks |
+| Not released | [`@testr/reportr`](https://github.com/xasdx/testr/tree/master/packages/reportr) | Reports test results |
+| Not released | [`@testr/doublr`](https://github.com/xasdx/testr/tree/master/packages/doublr) | Substitutes dependencies with test doubles |
 
 ## Example
 
