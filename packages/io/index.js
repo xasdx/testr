@@ -1,12 +1,14 @@
-let { log } = require("../util")
+let { log } = require("@testr/common")
+
+let matchers = require("./matchers")
 
 let MODULE_TYPE = "io"
 
 let evaluateMatcher = (matcher, functionality) => matcher.matcherType ? matcher.matches(functionality)
                                                                       : matcher === functionality()
                                                                       
-let parseArguments = arguments => {
-  let args = [...arguments]
+let parseArguments = argz => {
+  let args = [...argz]
   let matcher = args.splice(-1)[0]
   return { args, matcher }
 }
@@ -35,4 +37,4 @@ let io = function () {
   }
 }
 
-module.exports = { io }
+module.exports = { io, matchers }

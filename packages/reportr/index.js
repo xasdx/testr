@@ -1,4 +1,4 @@
-let { consoleReporter } = require("./console.reporter")
+let { consoleReporter } = require("./reporters/console.reporter")
 
 let TYPE_IO = "io"
 

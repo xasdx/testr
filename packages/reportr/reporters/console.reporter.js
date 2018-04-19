@@ -1,4 +1,4 @@
-let { is } = require("../util")
+let { is } = require("@testr/common")
 
 let COLOR = {
   YELLOW: "\x1b[33m%s\x1b[0m",
@@ -36,4 +36,10 @@ let onIoFailure = ({ module, input, actual, expected }) => logColored(
   [COLOR.RED, JSON.stringify(actual)]
 )
 
-module.exports = { consoleReporter: { onFunctionality, onIoSuccess, onIoFailure } }
+module.exports = {
+  consoleReporter: {
+    onFunctionality,
+    onIoSuccess,
+    onIoFailure
+  }
+}

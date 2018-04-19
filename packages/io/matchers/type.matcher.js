@@ -1,4 +1,4 @@
-let { is } = require("../util")
+let { is } = require("@testr/common")
 
 let TYPE = "type"
 

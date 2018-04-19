@@ -3,7 +3,7 @@ let { like } = require("./like.matcher")
 
 module.exports = {
   "like.matcher": {
-    "assertsThatAnObjectContainsProperties": () => {
+    "matchesAnObjectContainingSpecificProperties": () => {
       let matcher = like({ name: "paul", age: 13 })
       expect(matcher.matcherType).to.equal("like")
       expect(matcher.matches(() => ({ name: "paul", age: 13 }))).to.be.true

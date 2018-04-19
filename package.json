@@ -2,7 +2,6 @@
   "name": "testr",
   "version": "0.1.0",
   "private": true,
-  "main": "index.js",
   "scripts": {
     "test": "mocha **/*.test.js index.test.js --ui exports --recursive --reporter spec --check-leaks",
     "test-watch": "mocha **/*.test.js index.test.js --ui exports --recursive --reporter spec --check-leaks --watch"

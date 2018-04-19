@@ -1,4 +1,4 @@
-let { collectProperties } = require("../util")
+let { collectProperties } = require("@testr/common")
 
 let TYPE = "like"
 
