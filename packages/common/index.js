@@ -24,10 +24,13 @@ let isNumber = obj => typeof obj === "number"
 
 let isArray = obj => Array.isArray(obj)
 
+let flatten = arr => arr.reduce((acc, val) => acc.concat(val), [])
+
 module.exports = {
   forEachProperty,
   collectProperties,
   log,
+  flatten,
   is: {
     function: isFunction,
     array: isArray,

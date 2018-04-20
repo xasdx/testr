@@ -49,9 +49,12 @@ module.exports = {
         findUser: [
           io({}, like({ name: "paul" })),
           io({}, like({ name: "paul", age: 13 }))
+        ],
+        subtractTwo: [
+          io(5, [ type.number, 3, throws ])
         ]
       })
-      expect(results).to.have.lengthOf(2)
+      expect(results).to.have.lengthOf(3)
       expect(results[0].results).to.have.lengthOf(3)
       expect(results[0].results[0].success).to.be.true
       expect(results[0].results[1].success).to.be.false
@@ -59,7 +62,10 @@ module.exports = {
       expect(results[1].results).to.have.lengthOf(2)
       expect(results[1].results[0].success).to.be.true
       expect(results[1].results[1].success).to.be.false
-      // reporter({ results })
+      expect(results[2].results).to.have.lengthOf(3)
+      expect(results[2].results[0].success).to.be.true
+      expect(results[2].results[1].success).to.be.true
+      expect(results[2].results[2].success).to.be.false
     }
   }
 }

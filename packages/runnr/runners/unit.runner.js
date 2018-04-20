@@ -1,4 +1,4 @@
-let { forEachProperty, is } = require("../../common")
+let { forEachProperty, is, flatten } = require("../../common")
 
 let assertFunctionality = (functionality, property) => {
   if (!functionality) { throw new Error(`[testr] non-existing property '${property}'`) }
@@ -13,7 +13,7 @@ let processSpecifications = (targetUnit, specifications) => {
     assertFunctionality(functionality, property)
 
     if (is.array(testCases)) {
-      let propCaseResults = testCases.map(testCase => testCase.execute(functionality))
+      let propCaseResults = flatten(testCases).map(testCase => testCase.execute(functionality))
       specsRunResults.push({ property, results: propCaseResults })
     } else {
       throw new Error("[testr] test cases must be specified in an array")

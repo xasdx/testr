@@ -1,4 +1,4 @@
-let { log } = require("../common")
+let { is } = require("../common")
 
 let matchers = require("./matchers")
 
@@ -13,28 +13,33 @@ let parseArguments = argz => {
   return { args, matcher }
 }
 
+let createIoResult = (args, matcher) => ({
+  moduleType: MODULE_TYPE,
+  execute: f => {
+    let functionality = () => f(...args)
+    let ioResult = {
+      success: evaluateMatcher(matcher, functionality),
+      moduleType: MODULE_TYPE,
+      meta: {
+        input: args,
+        output: {
+          expected: matcher,
+          actual: functionality
+        }
+      }
+    }
+    return ioResult
+  }
+})
+
 let io = function () {
   let { args, matcher } = parseArguments(arguments)
 
-  return {
-    moduleType: MODULE_TYPE,
-    execute: f => {
-      let functionality = () => f(...args)
-      let ioResult = {
-        success: evaluateMatcher(matcher, functionality),
-        moduleType: MODULE_TYPE,
-        meta: {
-          input: args,
-          output: {
-            expected: matcher,
-            actual: functionality
-          }
-        }
-      }
-      if (process.env.TESTR_IO_DEBUG) { log(ioResult) }
-      return ioResult
-    }
+  if (is.array(matcher)) {
+    return matcher.map(m => createIoResult(args, m))
   }
+
+  return createIoResult(args, matcher)
 }
 
 module.exports = { io, matchers }
