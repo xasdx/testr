@@ -14,7 +14,7 @@ let reporter = ({ results, reporter = consoleReporter }) => {
       let ioSuccessResult = {
         module: result.moduleType,
         input: result.meta.input,
-        actual: result.meta.output.actual()
+        actual: isMatcher(result.meta.output.expected) ? result.meta.output.expected.toString() : result.meta.output.actual()
       }
       
       let ioFailureResult = {

@@ -21,7 +21,7 @@ let onIoSuccess = ({ module, input, actual }) => logColored(
   "input ",
   [COLOR.GREEN, JSON.stringify(input)],
   " outputs ",
-  [COLOR.GREEN, JSON.stringify(actual)]
+  [COLOR.GREEN, typeof actual === "string" ? actual : JSON.stringify(actual)]
 )
 
 let onIoFailure = ({ module, input, actual, expected }) => logColored(
