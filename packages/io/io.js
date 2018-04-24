@@ -2,12 +2,19 @@ let { is } = require("../common")
 
 let MODULE_TYPE = "io"
 
+let isMatcher = obj => obj.matcherType !== undefined
+
+let isCustomMatcher = obj => is.function(obj)
+
+let hasMultipleMatchers = obj => is.array(obj)
+
 let evaluateMatcher = (matcher, functionality) => {
-  if (matcher.matcherType) { // testr matcher functionality
+  if (isMatcher(matcher)) {
     return matcher.matches(functionality)
-  } else if (is.function(matcher)) { // client-supplied custom matcher
+  } else if (isCustomMatcher(matcher)) {
     return matcher(functionality())
-  } else { // matcher is a primitve
+  } else {
+    // matcher is a primitve
     return matcher === functionality()
   }
 }
@@ -18,33 +25,31 @@ let parseArguments = argz => {
   return { args, matcher }
 }
 
-let createIoResult = (args, matcher) => ({
+let createIoResult = (args, matcher, functionality) => ({
+  success: evaluateMatcher(matcher, functionality),
   moduleType: MODULE_TYPE,
-  execute: f => {
-    let functionality = () => f(...args)
-    let ioResult = {
-      success: evaluateMatcher(matcher, functionality),
-      moduleType: MODULE_TYPE,
-      meta: {
-        input: args,
-        output: {
-          expected: matcher,
-          actual: functionality
-        }
-      }
+  meta: {
+    input: args,
+    output: {
+      expected: matcher,
+      actual: functionality
     }
-    return ioResult
   }
+})
+
+let createIoTask = (args, matcher) => ({
+  moduleType: MODULE_TYPE,
+  execute: f => createIoResult(args, matcher, () => f(...args))
 })
 
 let io = function () {
   let { args, matcher } = parseArguments(arguments)
 
-  if (is.array(matcher)) {
-    return matcher.map(m => createIoResult(args, m))
+  if (hasMultipleMatchers(matcher)) {
+    return matcher.map(m => createIoTask(args, m))
   }
 
-  return createIoResult(args, matcher)
+  return createIoTask(args, matcher)
 }
 
 module.exports = { io }
