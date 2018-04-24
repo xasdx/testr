@@ -40,6 +40,12 @@ module.exports = {
       expect(ioResult.success).to.be.true
       expect(ioResult.meta.output.expected.matcherType).to.equal("throws")
       expect(otherIoResult.success).to.be.false
+    },
+    "executesCustomMatchers": () => {
+      let ioResult = io(1, n => n % 2 === 0).execute(m.addOne)
+      let otherIoResult = io(0, n => n % 2 === 0).execute(m.addOne)
+      expect(ioResult.success).to.be.true
+      expect(otherIoResult.success).to.be.false
     }
   }
 }

@@ -51,7 +51,12 @@ module.exports = {
           io({}, like({ name: "paul", age: 13 }))
         ],
         subtractTwo: [
-          io(5, [ type.number, 3, throws ])
+          io(5, [
+            type.number,
+            3,
+            throws,
+            n => n % 2 === 0
+          ])
         ]
       })
       expect(results).to.have.lengthOf(3)
@@ -62,10 +67,11 @@ module.exports = {
       expect(results[1].results).to.have.lengthOf(2)
       expect(results[1].results[0].success).to.be.true
       expect(results[1].results[1].success).to.be.false
-      expect(results[2].results).to.have.lengthOf(3)
+      expect(results[2].results).to.have.lengthOf(4)
       expect(results[2].results[0].success).to.be.true
       expect(results[2].results[1].success).to.be.true
       expect(results[2].results[2].success).to.be.false
+      expect(results[2].results[3].success).to.be.false
     }
   }
 }
