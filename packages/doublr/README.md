@@ -15,6 +15,6 @@ let { spy } = require("@testr/doublr")
 
 let aSpy = spy({ addOne: n => n + 1 })
 aSpy.addOne(3)
-aSpy.addOne.numberOfInvocations // is 1
+aSpy.addOne.invocations.length // is 1
 aSpy.addOne.invocations[0] // { in: [3] }
 ```
