@@ -14,6 +14,11 @@ let collectProperties = obj => {
   return props
 }
 
+let containsProperties = (props, obj) => {
+  let notMathchingProps = collectProperties(props).filter(({ key, value }) => value !== obj[key])
+  return notMathchingProps.length === 0
+}
+
 let log = obj => console.log(inspect(obj, false, null))
 
 let isFunction = obj => typeof obj === "function"
@@ -31,6 +36,7 @@ module.exports = {
   collectProperties,
   log,
   flatten,
+  containsProperties,
   is: {
     function: isFunction,
     array: isArray,
