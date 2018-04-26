@@ -1,11 +1,17 @@
+let { every } = require("../../common")
+
 let TYPE = "called"
 
-let called = (double, { times, inputs }) => {
-  return { matcherType: TYPE, matches: f => {
+let doInputsMatch = (inputs, invocations) => every(inputs, (input, i) => invocations[i] === input)
+
+let called = (double, { times, inputs }) => ({
+  matcherType: TYPE,
+  toString: () => `an interaction with ${double.name}`,
+  matches: f => {
     let timesMatch = times ? double.invocations.length === times : true
-    let inputsMatch = true
+    let inputsMatch = inputs ? doInputsMatch(inputs, double.invocations) : true
     return timesMatch && inputsMatch
-  }, toString: () => `an interaction with ${double.name}` }
-}
+  }
+})
 
 module.exports = { called }

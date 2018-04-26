@@ -56,7 +56,7 @@ Asserts that the result object (or array) is exactly like it is expected.
 ```javascript
 // asserts the result object to contain only the specified properties with exact values
 io({ name: "paul" }, exactly({ name: "paul", age: 23 }))
-// the result array contains the exact values
+// the result array contains the exact values (two person named paul with different ages)
 io({ name: "paul" }, exactly([{ name: "paul", age: 5 }, { name: "paul", age: 6 }]))
 ```
 

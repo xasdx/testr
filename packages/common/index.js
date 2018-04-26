@@ -14,10 +14,11 @@ let collectProperties = obj => {
   return props
 }
 
-let containsProperties = (props, obj) => {
-  let notMathchingProps = collectProperties(props).filter(({ key, value }) => value !== obj[key])
-  return notMathchingProps.length === 0
-}
+let containsProperties = (props, obj) => none(collectProperties(props), ({ key, value }) => value !== obj[key])
+
+let none = (arr, f) => arr.filter(f).length === 0
+
+let every = (arr, f) => arr.filter(f).length === arr.length
 
 let log = obj => console.log(inspect(obj, false, null))
 
@@ -37,6 +38,8 @@ module.exports = {
   log,
   flatten,
   containsProperties,
+  none,
+  every,
   is: {
     function: isFunction,
     array: isArray,
