@@ -3,14 +3,36 @@ let { expect } = require("chai")
 let { unit } = require("./packages/runnr")
 let { io, matchers } = require("./packages/io")
 let { reporter } = require("./packages/reportr")
+let { spy } = require("./packages/doublr")
 
 let { type, throws, like, called } = matchers
 
-let m = {
-  addOne: n => n + 1,
-  subtractTwo: n => n - 2,
-  findUser: () => ({ name: "paul" })
+class MyModule {
+
+  constructor(service) {
+    this.service = service
+  }
+
+  addOne(n) {
+    return n + 1
+  }
+
+  subtractTwo(n) {
+    return n - 2
+  }
+
+  findUser(query) {
+    return this.service.find(query)
+  }
 }
+
+let userService = {
+  find: () => ({ name: "paul" })
+}
+
+let userServiceSpy = spy(userService)
+
+let m = new MyModule(userServiceSpy)
 
 module.exports = {
   "testr": {

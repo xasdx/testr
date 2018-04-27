@@ -12,6 +12,9 @@ let processSpecifications = (targetUnit, specifications) => {
     let functionality = targetUnit[property]
     assertFunctionality(functionality, property)
 
+    // binding to target unit, so 'this' will work properly
+    functionality = functionality.bind(targetUnit)
+
     if (is.array(testCases)) {
       let propCaseResults = flatten(testCases).map(testCase => testCase.execute(functionality))
       specsRunResults.push({ property, results: propCaseResults })
