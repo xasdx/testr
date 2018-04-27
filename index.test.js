@@ -5,7 +5,7 @@ let { io, matchers } = require("./packages/io")
 let { reporter } = require("./packages/reportr")
 let { spy } = require("./packages/doublr")
 
-let { type, throws, like, called } = matchers
+let { type, throws, like, exactly, called } = matchers
 
 class MyModule {
 
@@ -94,6 +94,16 @@ module.exports = {
       expect(results[2].results[1].success).to.be.true
       expect(results[2].results[2].success).to.be.false
       expect(results[2].results[3].success).to.be.false
+    },
+    "assertsTestDoubleInteractions": () => {
+      let results = unit(m).specs({
+        findUser: [
+          io({}, called(userServiceSpy.find))
+        ]
+      })
+      expect(results).to.have.lengthOf(1)
+      expect(results[0].results).to.have.lengthOf(1)
+      expect(results[0].results[0].success).to.be.true
     }
   }
 }

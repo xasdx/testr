@@ -4,7 +4,7 @@ let TYPE = "called"
 
 let doInputsMatch = (inputs, invocations) => every(inputs, (input, i) => invocations[i] === input)
 
-let called = (double, { times, inputs }) => ({
+let called = (double, { times, inputs } = {}) => ({
   matcherType: TYPE,
   toString: () => `an interaction with ${double.name}`,
   matches: f => {

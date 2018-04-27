@@ -12,7 +12,8 @@ let processSpecifications = (targetUnit, specifications) => {
     let functionality = targetUnit[property]
     assertFunctionality(functionality, property)
 
-    // binding to target unit, so 'this' will work properly
+    // binding the functionality to the correct context
+    // so 'this' resolves properly
     functionality = functionality.bind(targetUnit)
 
     if (is.array(testCases)) {
