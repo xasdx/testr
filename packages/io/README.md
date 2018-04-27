@@ -18,7 +18,7 @@ io(5, x => x > 0) // lambdas function as custom matchers
 io(5, [type.number, x => x % 2 === 0]) // multiple matchers can be supplied in an array
 ```
 
-### matchers
+### Matchers
 
 Matchers can be used in combination with the io module, their purpose is to help express assertions on test results.
 
@@ -73,11 +73,17 @@ io({ name: "paul" }, structured([{ name: type.string, age: type.number }]))
 
 #### .called
 
-Verifies interactions performed on mocks and spies.
+Verifies interactions performed on test doubles.
 
 ```javascript
 {
-  // 'find' method was called on mockRepository with '{}' once
+  // 'find' method was called on mockRepository once, with input '{}'
   findUsers: io({}, called(mockRepository.find, { times: 1, inputs: [{}] })
+  // 'find' method was called at least once
+  findUsers: io({}, called(mockRepository.find)
+  // there was no interaction with the 'find' method
+  findUsers: io({}, called(mockRepository.find, { times: 0 })
+  // 'find' was called two times, with the specified arguments in order
+  findUsers: io({}, called(mockRepository.find, { inputs: [{ name: "plato" }, { name: "aristotle" }] })
 }
 ```
