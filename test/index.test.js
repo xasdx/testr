@@ -1,30 +1,13 @@
 let { expect } = require("chai")
 
-let { unit } = require("./packages/runnr")
-let { io, matchers } = require("./packages/io")
-let { reporter } = require("./packages/reportr")
-let { spy } = require("./packages/doublr")
+let { unit } = require("../packages/runnr")
+let { io, matchers } = require("../packages/io")
+let { reporter } = require("../packages/reportr")
+let { spy } = require("../packages/doublr")
 
 let { type, throws, like, exactly, called } = matchers
 
-class MyModule {
-
-  constructor(service) {
-    this.service = service
-  }
-
-  addOne(n) {
-    return n + 1
-  }
-
-  subtractTwo(n) {
-    return n - 2
-  }
-
-  findUser(query) {
-    return this.service.find(query)
-  }
-}
+let TestModule = require("./test.module")
 
 let userService = {
   find: () => ({ name: "paul" })
@@ -32,7 +15,7 @@ let userService = {
 
 let userServiceSpy = spy(userService)
 
-let m = new MyModule(userServiceSpy)
+let m = new TestModule(userServiceSpy)
 
 module.exports = {
   "testr": {
